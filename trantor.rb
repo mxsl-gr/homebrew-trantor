@@ -3,11 +3,11 @@ class Trantor < Formula
   homepage "https://www.terminus.io/"
   url "http://mxsl.oss-cn-hangzhou.aliyuncs.com/dist/trantor/trantor.0.0.1.tar.gz"
   version "0.0.1"
-  sha256 "eb3ebac48ded490e070d72475116f1eb8fa67ea2909ebefce481fc5a26821b93"
+  sha256 "21775a2f0a220a4a4b2fda8deff9aba19ee3d2b08d89537efd153f1ce3d279ee"
 
   depends_on "docker"
 
-  def shim_script(target)
+  def buildExe()
     <<~EOS
       #!/bin/bash
       if [ -z "$JAVA_HOME" ] ; then
@@ -23,13 +23,7 @@ class Trantor < Formula
     # Remove windows files
     lib.install Dir["lib/*"]
     libexec.install Dir["libexec/*"]
-
-    Pathname.glob("#{libexec}/bin/*.sh") do |path|
-      script_name = path.basename
-      bin_name    = path.basename ".sh"
-      (bin+bin_name).write shim_script(script_name)
-    end
-    rm_f Dir["libexec/bin"]
+    (bin/"trantor").write buildExe()
   end
 
   test do
