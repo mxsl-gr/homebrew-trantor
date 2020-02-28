@@ -7,6 +7,18 @@ class Trantor < Formula
 
   depends_on "docker"
 
+  def shim_script(target)
+    <<~EOS
+      #!/bin/bash
+      if [ -z "$JAVA_HOME" ] ; then
+        JAVACMD=`which java`
+      else
+        JAVACMD="$JAVA_HOME/bin/java"
+      fi
+      exec "$JAVACMD" -jar "#{libexec}/trantor-cli.jar"
+    EOS
+  end
+
   def install
     # Remove windows files
     lib.install Dir["lib/*"]
