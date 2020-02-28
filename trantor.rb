@@ -21,18 +21,8 @@ class Trantor < Formula
     end
   end
 
-  def caveats
-    <<-EOS.undent
-      run shell script (need root):
-        sudo /bin/sh #{prefix}/install-mac.sh
-      export env:
-        export PAMPAS_TEMPLATES=#{lib}/pampas-templates/
-    EOS
-  end
-
   test do
     system "#{bin}/pampas", "version"
   end
 
 end
-
