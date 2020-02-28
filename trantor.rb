@@ -9,21 +9,19 @@ class Trantor < Formula
 
   def install
     # Remove windows files
-    bin.install Dir["bin/*"]
     lib.install Dir["lib/*"]
     libexec.install Dir["libexec/*"]
 
-    Pathname.glob("#{bin}/*") do |file|
-      next if file.directory?
-      basename = file.basename
-
-      (bin/basename).write_env_script file, :JAVA_HOME => "${JAVA_HOME:-#{Formula["openjdk"].opt_prefix}}"
-      (bin/basename).write_env_script file, :TRANTOR_HOME => "#{Formula["trantor"].lib}"
+    Pathname.glob("#{libexec}/bin/*.sh") do |path|
+      script_name = path.basename
+      bin_name    = path.basename ".sh"
+      (bin+bin_name).write shim_script(script_name)
     end
+    rm_f Dir["libexec/bin"]
   end
 
   test do
-    system "#{bin}/pampas", "version"
+    system "#{bin}/trantor", "version"
   end
 
 end
