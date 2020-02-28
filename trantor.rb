@@ -10,9 +10,10 @@ class Trantor < Formula
   def install
     # Remove windows files
     bin.install Dir["bin/*"]
-    libexec.install Dir["bin/*"]
+    lib.install Dir["lib/*"]
+    libexec.install Dir["libexec/*"]
 
-    Pathname.glob("#{libexec}/bin/*") do |file|
+    Pathname.glob("#{bin}/*") do |file|
       next if file.directory?
       basename = file.basename
 
