@@ -5,8 +5,6 @@ class Trantor < Formula
   version "0.0.1"
   sha256 "94b08394258b8672e79b5deee1646a4b50315a3ab565d09720a3f75ea7be54aa"
 
-  depends_on "openjdk"
-  depends_on "maven"
   depends_on "docker"
 
   def install
